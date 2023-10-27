@@ -2,6 +2,7 @@
 
 import { getAntdFieldsRequireRule } from '@/helpers/validations';
 import { Button, Form, message } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -15,10 +16,18 @@ function Register() {
   const [loading, setLoading] = useState(false);
 
   const onRegister = async (values: UserType) => {
-    message.success('Register success');
-    setLoading(true);
-    console.log(values);
-    setLoading(false);
+    try {
+      setLoading(true);
+      await axios.post('/api/auth/register', values).then((res) => {
+        setLoading(false);
+        message.success('Register success, please login to continue');
+        // redirect to login page
+        console.log(res);
+      });
+    } catch (error: any) {
+      message.error(error.response.data.message);
+      setLoading(false);
+    }
   };
 
   return (
