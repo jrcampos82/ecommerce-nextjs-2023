@@ -19,3 +19,12 @@ model User {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
