@@ -9,7 +9,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false);
   const pathName = usePathname();
   const isPrivatePage =
-    pathName !== "/auth/login" && pathName !== "/auth/register";
+    pathName !== '/auth/login' && pathName !== '/auth/register';
 
   const content = (
     <div className="flex flex-col gap-2 p-2">
@@ -53,10 +53,14 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-
       {isPrivatePage && (
         <div className="bg-primary py-5 px-5 flex justify-between items-center">
-          <div className="flex">
+          <div
+            className="flex cursor-pointer"
+            onClick={() => {
+              router.push('/');
+            }}
+          >
             <h1 className="text-2xl font-bold text-red-500">Frame Shop</h1>
           </div>
           <div className="flex gap-5 items-center">
@@ -67,7 +71,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-      <div className="p-5">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }

@@ -1,26 +1,48 @@
 'use client';
-import React from 'react';
-import { Tabs } from 'antd';
+import React, { useState } from 'react';
+import { Tabs, TabsProps } from 'antd';
 import CategoriesList from './components/CategoriesList';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function Profile() {
-  return (
-    <div>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Products" key="1">
-          Products
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Categories" key="2">
-          <CategoriesList />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Orders" key="3">
-          Orders
-        </Tabs.TabPane>
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const [selectedTab, setSelectedTab] = useState<string>(id || '1');
+  const router = useRouter();
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: 'User',
+      children: 'User page',
+    },
+    {
+      key: '2',
+      label: 'Products',
+      children: 'Products Page',
+    },
+    {
+      key: '3',
+      label: 'Categories',
+      children: <CategoriesList />,
+    },
+    {
+      key: '4',
+      label: 'Orders',
+      children: 'Orders Page',
+    },
+  ];
 
-        <Tabs.TabPane tab="Users" key="4">
-          Users
-        </Tabs.TabPane>
-      </Tabs>
+  return (
+    <div className="p-5">
+      <Tabs
+        defaultActiveKey="1"
+        items={items}
+        onChange={(key) => {
+          router.push(`/profile?id=${key}`);
+          setSelectedTab(key);
+        }}
+        activeKey={selectedTab}
+      ></Tabs>
     </div>
   );
 }

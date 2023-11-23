@@ -1,9 +1,9 @@
-'use client';
-import { Button, Table, message } from 'antd';
-import React, { useState } from 'react';
-import CategoryForm from './CategoryForm';
-import axios from 'axios';
-import moment from 'moment';
+"use client";
+import { Button, Table, message } from "antd";
+import React, { useState } from "react";
+import CategoryForm from "./CategoryForm";
+import axios from "axios";
+import moment from "moment";
 
 function CategoriesList() {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
@@ -15,7 +15,7 @@ function CategoriesList() {
   const getCategories = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:3000/category');
+      const res = await axios.get("http://localhost:3000/category");
       setCategories(res.data);
     } catch (error: any) {
       message.error(error.message);
@@ -33,7 +33,7 @@ function CategoriesList() {
     try {
       setLoadingDelete(true);
       await axios.delete(`http://localhost:3000/category/${id}`);
-      message.success('Category deleted successfully');
+      message.success("Category deleted successfully");
       setSelectedCategory(null);
       getCategories();
     } catch (error: any) {
@@ -44,28 +44,28 @@ function CategoriesList() {
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id' },
+    { title: "ID", dataIndex: "id", key: "id" },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
       render: (createdAt: string) =>
-        moment(createdAt).format('DD MMM YYYY hh:mm'),
+        moment(createdAt).format("DD MMM YYYY hh:mm"),
     },
     {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
       render: (action: any, params: any) => {
         return (
           <div className="flex gap-3 items-center">
