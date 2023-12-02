@@ -1,5 +1,7 @@
 'use client';
+import { ProductInterface } from '@/interfaces';
 import { CartState } from '@/redux/cartSlice';
+import { Button } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -41,9 +43,7 @@ function Cart() {
                     <span className="text-sm">{item.name}</span>
                     <span
                       className="text-xs underline text-red-700 cursor-pointer"
-                      onClick={() => {
-                        dispatch(RemoveProductFromCart(item));
-                      }}
+                      onClick={() => {}}
                     >
                       Remove
                     </span>
@@ -53,33 +53,9 @@ function Cart() {
                 <span className="col-span-1">$ {item.price}</span>
 
                 <div className="col-span-1 border border-solid p-2 border-gray-400 flex gap-2 justify-between">
-                  <i
-                    className="ri-subtract-line"
-                    onClick={() => {
-                      if (item.quantity !== 1) {
-                        dispatch(
-                          EditProductInCart({
-                            ...item,
-                            quantity: item.quantity - 1,
-                          })
-                        );
-                      } else {
-                        dispatch(RemoveProductFromCart(item));
-                      }
-                    }}
-                  ></i>
+                  <i className="ri-subtract-line" onClick={() => {}}></i>
                   <span>{item.quantity}</span>
-                  <i
-                    className="ri-add-line"
-                    onClick={() => {
-                      dispatch(
-                        EditProductInCart({
-                          ...item,
-                          quantity: item.quantity + 1,
-                        })
-                      );
-                    }}
-                  ></i>
+                  <i className="ri-add-line" onClick={() => {}}></i>
                 </div>
 
                 <span className="col-span-1">
@@ -120,14 +96,7 @@ function Cart() {
                 <span>$ {total}</span>
               </div>
 
-              <Button
-                block
-                type="primary"
-                className="mt-10"
-                onClick={() => {
-                  setShowCheckoutModal(true);
-                }}
-              >
+              <Button block type="primary" className="mt-10" onClick={() => {}}>
                 Proceed to Checkout
               </Button>
             </div>
