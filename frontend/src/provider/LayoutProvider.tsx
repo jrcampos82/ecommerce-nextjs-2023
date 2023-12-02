@@ -45,6 +45,11 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     getCurrentUser();
   }, []);
 
+  useEffect(() => {
+    // when the cartItems changes, we will save carItems into localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  }, [cartItems])
+
   const getCurrentUser = async () => {
     try {
       setLoading(true);

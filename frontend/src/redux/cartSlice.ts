@@ -22,7 +22,40 @@ export const cartSlice = createSlice({
     ) => {
       state.cartItems.push(action.payload);
     },
+
+    RemoveProductCart: (
+      state,
+      action: {
+        type: string;
+        payload: ProductInterface;
+      }
+    ) => {
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== action.payload.id
+      );
+    },
+
+    EditProductCart: (
+      state,
+      action: {
+        type: string;
+        payload: ProductInterface;
+      }
+    ) => {
+      state.cartItems = state.cartItems.map((item) =>
+        item.id === action.payload.id ? action.payload : item
+      );
+    },
+
+    ClearCart: (state) => {
+      state.cartItems = [];
+    },
   },
 });
 
-export const { AddProductToCart } = cartSlice.actions;
+export const {
+  AddProductToCart,
+  RemoveProductCart,
+  EditProductCart,
+  ClearCart,
+} = cartSlice.actions;

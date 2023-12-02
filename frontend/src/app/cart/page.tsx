@@ -1,6 +1,6 @@
 'use client';
 import { ProductInterface } from '@/interfaces';
-import { CartState } from '@/redux/cartSlice';
+import { CartState, EditProductCart, RemoveProductCart } from '@/redux/cartSlice';
 import { Button } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +46,9 @@ function Cart() {
                     <span className="text-sm">{item.name}</span>
                     <span
                       className="text-xs underline text-red-700 cursor-pointer"
-                      onClick={() => {}}
+                      onClick={() => {
+                        dispatch(RemoveProductCart(item))
+                      }}
                     >
                       Remove
                     </span>
@@ -56,9 +58,21 @@ function Cart() {
                 <span className="col-span-1">$ {item.price}</span>
 
                 <div className="col-span-1 border border-solid p-2 border-gray-400 flex gap-2 justify-between">
-                  <i className="ri-subtract-line" onClick={() => {}}></i>
+                  <i className="ri-subtract-line" onClick={() => {
+                    dispatch(EditProductCart({
+                      ...item,
+                      quantity: item.quantity - 1
+                    }))
+                  }}></i>
                   <span>{item.quantity}</span>
-                  <i className="ri-add-line" onClick={() => {}}></i>
+                  <i className="ri-add-line" onClick={() => {
+                    dispatch(
+                      EditProductCart({
+                        ...item,
+                        quantity: item.quantity + 1,
+                      })
+                    );
+                  }}></i>
                 </div>
 
                 <span className="col-span-1">
@@ -111,7 +125,6 @@ function Cart() {
           <h1 className="text-sm">Your cart is empty</h1>
         </div>
       )}
-      )
     </div>
   );
 }
