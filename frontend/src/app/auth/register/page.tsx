@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Form, message } from 'antd';
+import { Button, Form, message, notification } from 'antd';
 import Link from 'next/link';
 import axios from 'axios';
 import { useState } from 'react';
@@ -21,12 +21,18 @@ function Register() {
       setLoading(true);
       await axios.post('http://localhost:3000/user', values).then((res) => {
         setLoading(false);
-        message.success('Register success, please login to continue');
+        notification.success({
+          message: 'Success',
+          description: `Register successfully! Please login to continue!`,
+        });
         router.push('/auth/login');
         console.log(res);
       });
     } catch (error: any) {
-      message.error(error.response.data.message);
+      notification.error({
+        message: 'Error',
+        description: error.message,
+      });
       setLoading(false);
     }
   };

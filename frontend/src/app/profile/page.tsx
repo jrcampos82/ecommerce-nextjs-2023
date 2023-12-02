@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Tabs, TabsProps } from 'antd';
 import CategoriesList from './components/CategoriesList';
 import { useRouter, useSearchParams } from 'next/navigation';
+import ProductsList from './components/ProductsList';
 
 function Profile() {
   const searchParams = useSearchParams();
@@ -18,7 +19,7 @@ function Profile() {
     {
       key: '2',
       label: 'Products',
-      children: 'Products Page',
+      children: <ProductsList />,
     },
     {
       key: '3',

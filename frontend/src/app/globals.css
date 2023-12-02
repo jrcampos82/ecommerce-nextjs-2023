@@ -16,7 +16,8 @@ button {
   border-radius: 0 !important;
 }
 
-input {
+input,
+select {
   width: 100% !important;
   height: 45px !important;
   padding: 0 10px !important;
@@ -38,4 +39,9 @@ textarea {
   padding: 10px !important;
   border: 1px solid #a9a9a9 !important;
   border-radius: 5px !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: #000 !important;
 }
