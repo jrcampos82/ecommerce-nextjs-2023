@@ -4,10 +4,13 @@ import { CartState } from '@/redux/cartSlice';
 import { Button } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
 
 function Cart() {
   const { cartItems }: CartState = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
+
+  const total = 0;
 
   return (
     <div className="mt-10">
