@@ -1,13 +1,20 @@
 'use client';
-import { Popover, Button, message, notification } from 'antd';
+import { CartState } from '@/redux/cartSlice';
+import { Popover, Button, message, notification, Badge } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(false);
   const pathName = usePathname();
+
+  const { cartItems }: CartState = useSelector((state: any) => state.cart);
+
+  const dispatch = useDispatch();
+
   const isPrivatePage =
     pathName !== '/auth/login' && pathName !== '/auth/register';
 
@@ -67,6 +74,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex gap-5 items-center">
+              <Badge count={cartItems.length} className="cursor-pointer">
+                <i
+                  className="ri-shopping-cart-line text-white text-2xl"
+                  onClick={() => router.push('/cart')}
+                ></i>
+              </Badge>
 
               <Popover content={content} trigger="click">
                 <div className="flex h-8 w-8 bg-white p-2 rounded-full items-center justify-center cursor-pointer">
@@ -79,7 +92,6 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
           <div className="p-5">{children}</div>
         </>
       )}
-
     </div>
   );
 }

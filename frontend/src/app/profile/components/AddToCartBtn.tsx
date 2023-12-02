@@ -1,11 +1,12 @@
 'use client';
 import { ProductInterface } from '@/interfaces';
-import { AddProductToCart } from '@/redux/cartSlice';
-import { Button, message } from 'antd';
+import { AddProductToCart, CartState } from '@/redux/cartSlice';
+import { Button, message, notification } from 'antd';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function AddToCartBtn({ product }: { product: ProductInterface }) {
+  const { cartItems }: CartState = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
   return (
@@ -19,8 +20,14 @@ function AddToCartBtn({ product }: { product: ProductInterface }) {
               quantity: 1,
             })
           );
-          message.success('Added to cart');
+          notification.success({
+            message: 'Added to cart',
+            description: `${product.name} has been added to cart`,
+          });
         }}
+        disabled={
+          cartItems.some((item: ProductInterface) => item.id === product.id)
+        }
       >
         Add Cart
       </Button>
