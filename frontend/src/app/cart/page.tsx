@@ -1,16 +1,27 @@
 'use client';
 import { ProductInterface } from '@/interfaces';
-import { CartState, EditProductCart, RemoveProductCart } from '@/redux/cartSlice';
+import {
+  CartState,
+  EditProductCart,
+  RemoveProductCart,
+} from '@/redux/cartSlice';
 import { Button } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
+import CheckoutModal from './CheckoutModal';
 
 function Cart() {
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const { cartItems }: CartState = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
-  const total = 0;
+  const subTotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  )
+
+  const total = subTotal + 50; // 50 = shipping fee
 
   return (
     <div className="mt-10">
@@ -47,7 +58,7 @@ function Cart() {
                     <span
                       className="text-xs underline text-red-700 cursor-pointer"
                       onClick={() => {
-                        dispatch(RemoveProductCart(item))
+                        dispatch(RemoveProductCart(item));
                       }}
                     >
                       Remove
@@ -58,21 +69,29 @@ function Cart() {
                 <span className="col-span-1">$ {item.price}</span>
 
                 <div className="col-span-1 border border-solid p-2 border-gray-400 flex gap-2 justify-between">
-                  <i className="ri-subtract-line" onClick={() => {
-                    dispatch(EditProductCart({
-                      ...item,
-                      quantity: item.quantity - 1
-                    }))
-                  }}></i>
+                  <i
+                    className="ri-subtract-line"
+                    onClick={() => {
+                      dispatch(
+                        EditProductCart({
+                          ...item,
+                          quantity: item.quantity - 1,
+                        })
+                      );
+                    }}
+                  ></i>
                   <span>{item.quantity}</span>
-                  <i className="ri-add-line" onClick={() => {
-                    dispatch(
-                      EditProductCart({
-                        ...item,
-                        quantity: item.quantity + 1,
-                      })
-                    );
-                  }}></i>
+                  <i
+                    className="ri-add-line"
+                    onClick={() => {
+                      dispatch(
+                        EditProductCart({
+                          ...item,
+                          quantity: item.quantity + 1,
+                        })
+                      );
+                    }}
+                  ></i>
                 </div>
 
                 <span className="col-span-1">
@@ -113,7 +132,14 @@ function Cart() {
                 <span>$ {total}</span>
               </div>
 
-              <Button block type="primary" className="mt-10" onClick={() => {}}>
+              <Button
+                block
+                type="primary"
+                className="mt-10"
+                onClick={() => {
+                  setShowCheckoutModal(true);
+                }}
+              >
                 Proceed to Checkout
               </Button>
             </div>
@@ -124,6 +150,14 @@ function Cart() {
           <i className="ri-shopping-cart-line text-6xl"></i>
           <h1 className="text-sm">Your cart is empty</h1>
         </div>
+      )}
+
+      {showCheckoutModal && (
+        <CheckoutModal
+          setShowCheckoutModal={setShowCheckoutModal}
+          showCheckoutModal={showCheckoutModal}
+          total={total}
+        />
       )}
     </div>
   );
